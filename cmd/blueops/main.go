@@ -1,4 +1,4 @@
-package blueops
+package main
 
 import "fmt"
 
