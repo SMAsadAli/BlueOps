@@ -1,7 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"os"
+
+	"github.com/SMAsadAli/blueops/internal/cli"
+)
 
 func main() {
-	fmt.Println("Hello, World!")
+	if err := cli.NewRootCmd().Execute(); err != nil {
+		os.Exit(1)
+	}
 }
