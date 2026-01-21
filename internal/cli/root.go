@@ -1,6 +1,9 @@
 package cli
 
-import "github.com/spf13/cobra"
+import (
+	"github.com/SMAsadAli/blueops/internal/config"
+	"github.com/spf13/cobra"
+)
 
 type RootOptions struct {
 	ConfigPath string
@@ -15,6 +18,17 @@ func NewRootCmd() *cobra.Command {
 		Use:          "blueops",
 		Short:        "Enterprise-grade internal CLI for ops workflows",
 		SilenceUsage: true,
+		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+			cfg, err := config.Load(config.LoadOptions{
+				ConfigPath:  opts.ConfigPath,
+				EnvOverride: opts.Env,
+			})
+			if err != nil {
+				return err
+			}
+			cmd.SetContext(config.WithConfig(cmd.Context(), cfg))
+			return nil
+		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return cmd.Help()
 		},
@@ -33,6 +47,7 @@ func NewRootCmd() *cobra.Command {
 		NewServiceCmd(),
 		NewDeployCmd(),
 		NewValidateCmd(),
+		NewConfigCmd(),
 		NewCompletionCmd(),
 	)
 
