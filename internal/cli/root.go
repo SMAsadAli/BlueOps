@@ -25,7 +25,16 @@ func NewRootCmd() *cobra.Command {
 	cmd.PersistentFlags().BoolVar(&opts.JSON, "json", false, "Output JSON instead of table output")
 	cmd.PersistentFlags().BoolVar(&opts.Verbose, "verbose", false, "Enable verbose logging")
 
-	cmd.AddCommand(NewVersionCmd())
+	cmd.AddCommand(
+		NewVersionCmd(),
+		NewInitCmd(),
+		NewAuthCmd(),
+		NewEnvCmd(),
+		NewServiceCmd(),
+		NewDeployCmd(),
+		NewValidateCmd(),
+		NewCompletionCmd(),
+	)
 
 	return cmd
 }
