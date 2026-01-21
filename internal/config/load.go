@@ -86,7 +86,9 @@ func mergeConfigFile(v *viper.Viper, path string) error {
 		}
 		return fmt.Errorf("open config %s: %w", path, err)
 	}
-	defer f.Close()
+	defer func() {
+		_ = f.Close()
+	}()
 
 	if err := v.MergeConfig(f); err != nil {
 		return fmt.Errorf("load config %s: %w", path, err)
