@@ -1,0 +1,10 @@
+tmp/
+
+# Build artifacts
+/blueops
+/dist/
+*.test
+coverage.out
+
+# OS files
+.DS_Store
